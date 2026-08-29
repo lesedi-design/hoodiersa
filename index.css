@@ -1,0 +1,100 @@
+/*
+ * HoodieRSA — Haunted Editorial visual system.
+ * Ink-black campaign surfaces, bone-white editorial typography, Ritual Red stitches,
+ * and restrained pastel collection accents. Prefer poster-scale asymmetry over generic cards.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Anton", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+}
+
+:root {
+  --background: oklch(0.09 0.004 60);
+  --foreground: oklch(0.95 0.01 90);
+  --card: oklch(0.12 0.005 60);
+  --card-foreground: oklch(0.95 0.01 90);
+  --popover: oklch(0.13 0.005 60);
+  --popover-foreground: oklch(0.95 0.01 90);
+  --primary: oklch(0.48 0.16 29);
+  --primary-foreground: oklch(0.98 0.005 90);
+  --secondary: oklch(0.19 0.006 60);
+  --secondary-foreground: oklch(0.9 0.01 90);
+  --muted: oklch(0.18 0.006 60);
+  --muted-foreground: oklch(0.69 0.012 80);
+  --accent: oklch(0.24 0.01 60);
+  --accent-foreground: oklch(0.95 0.01 90);
+  --destructive: oklch(0.58 0.2 28);
+  --destructive-foreground: oklch(0.98 0.005 90);
+  --border: oklch(0.95 0.01 90 / 16%);
+  --input: oklch(0.95 0.01 90 / 18%);
+  --ring: oklch(0.55 0.17 29);
+  --radius: 0.25rem;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; background: #11100f; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #11100f;
+  color: #f7f3e9;
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button, a { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible { outline: 2px solid #f5ddd9; outline-offset: 4px; }
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.stitch-line { background-image: repeating-linear-gradient(90deg, currentColor 0 8px, transparent 8px 14px); }
+
+.checkout-input { width: 100%; border: 1px solid rgb(247 243 233 / 20%); background: #11100f; padding: 0.85rem 1rem; color: #f7f3e9; font: inherit; font-size: 0.875rem; outline: none; transition: border-color 180ms ease, background-color 180ms ease; }
+.checkout-input::placeholder { color: rgb(247 243 233 / 42%); }
+.checkout-input:focus { border-color: #B5342E; background: #171515; }
+.checkout-input option { background: #171515; color: #f7f3e9; }
+
+.halftone {
+  background-image: radial-gradient(currentColor 0.8px, transparent 0.8px);
+  background-size: 5px 5px;
+}
+
+.ticker-track { width: max-content; animation: ticker 28s linear infinite; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,17 @@
+/* HoodieRSA Global Cart — persistent commerce drawer for every Haunted Editorial route. */
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerClose } from "@/components/ui/drawer";
+import { getCartProduct, useCart } from "@/contexts/CartContext";
+import { getPrice } from "@shared/catalog";
+
+export default function GlobalCartDrawer() {
+  const { items, itemCount, subtotal, updateQuantity, removeItem } = useCart();
+  const [, navigate] = useLocation();
+  const [open, setOpen] = useState(false);
+  return <>
+    <button onClick={() => setOpen(true)} aria-label={`Open cart with ${itemCount} items`} className="fixed bottom-5 left-5 z-[90] grid size-12 place-items-center rounded-full border border-[#f7f3e9]/30 bg-[#171515] text-[#f7f3e9] shadow-xl transition hover:-translate-y-1 hover:border-[#EFA8C4] sm:bottom-7 sm:left-7"><ShoppingBag size={19} />{itemCount > 0 && <span className="absolute -right-1 -top-1 grid size-5 place-items-center rounded-full bg-[#B5342E] text-[9px] font-bold">{itemCount}</span>}</button>
+    <Drawer open={open} onOpenChange={setOpen} direction="right"><DrawerContent className="fixed bottom-0 right-0 top-0 mt-0 flex w-full flex-col rounded-none border-l border-[#f7f3e9]/20 bg-[#171515] text-[#f7f3e9] sm:max-w-md"><DrawerHeader className="border-b border-[#f7f3e9]/20 text-left"><DrawerTitle className="font-display text-3xl uppercase">Your Haul</DrawerTitle><DrawerClose className="absolute right-4 top-4"><X size={22} /></DrawerClose></DrawerHeader><div className="flex-1 overflow-y-auto p-5">{items.length === 0 ? <p className="mt-12 text-center text-sm text-[#f7f3e9]/60">Your cart is empty. Go claim something weird.</p> : <div className="space-y-6">{items.map((item) => { const product = getCartProduct(item.productSlug); if (!product) return null; return <div key={item.id} className="flex gap-4"><div className="size-20 shrink-0 bg-[#11100f] p-2"><img src={product.image} alt="" className="size-full object-contain" /></div><div className="flex-1"><div className="flex justify-between gap-2"><p className="text-sm font-bold uppercase">{product.name}</p><p className="text-sm font-bold">R{getPrice(product.slug, item.size) * item.quantity}</p></div><p className="mt-1 text-xs text-[#f7f3e9]/50">{item.colorway} / {item.size}</p><div className="mt-3 flex items-center justify-between"><div className="flex items-center border border-[#f7f3e9]/20"><button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 py-1"><Minus size={12} /></button><span className="w-7 text-center text-xs">{item.quantity}</span><button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 py-1"><Plus size={12} /></button></div><button onClick={() => removeItem(item.id)} aria-label="Remove item" className="text-[#B5342E]"><Trash2 size={15} /></button></div></div></div>; })}</div>}</div>{items.length > 0 && <div className="border-t border-[#f7f3e9]/20 p-5"><div className="mb-5 flex justify-between font-bold uppercase"><span>Subtotal</span><span>R{subtotal}</span></div><button onClick={() => { setOpen(false); navigate("/checkout"); }} className="w-full bg-[#B5342E] py-4 text-sm font-bold uppercase tracking-[0.1em] text-white">Proceed to Checkout</button></div>}</DrawerContent></Drawer>
+  </>;
+}
